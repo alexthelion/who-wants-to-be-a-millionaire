@@ -25,7 +25,7 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this.questions = this.route.snapshot.data['questions'];
-    this.gameDetails = this.gameService.getGameDetails();
+    this.gameDetails = this.gameService.gameDetails;
     if (!this.gameDetails) {
       this.router.navigateByUrl('/');
     }
@@ -65,6 +65,6 @@ export class GameComponent implements OnInit {
   }
 
   get username(): string {
-    return this.gameService.getGameDetails()?.username;
+    return this.gameService.gameDetails?.username;
   }
 }
