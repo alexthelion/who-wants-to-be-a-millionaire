@@ -37,23 +37,25 @@ export class GameComponent implements OnInit {
   }
 
   nextQuestion(): void {
+    if (this.currentQuestion.correct_answer === this.currentAnswer) {
+      this.correctAnswers += 1;
+    } else {
+      this.wrongAnswers += 1;
+    }
+
     if (!!this.currentAnswer && this.questions.length > this.questionIndex) {
       this.currentQuestion = undefined;
       this.currentCorrectIndex = undefined;
       this.currentQuestion = this.gameDetails.questions[this.questionIndex++];
     } else {
       alert('Game Over');
+      this.router.navigateByUrl('/');
     }
   }
 
   selectAnswer(answer: string): void {
     this.currentAnswer = answer;
     this.currentCorrectIndex = this.currentQuestion.answers.indexOf(this.currentQuestion.correct_answer);
-    if (this.currentQuestion.correct_answer === answer) {
-      this.correctAnswers += 1;
-    } else {
-      this.wrongAnswers += 1;
-    }
   }
 
   skipQuestion(): void {
