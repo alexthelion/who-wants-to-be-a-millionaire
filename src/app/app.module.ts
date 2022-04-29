@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import {MdbFormsModule} from "mdb-angular-ui-kit/forms";
+import {HttpClientModule} from '@angular/common/http';
+import {GameModule} from './game/game.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import {MdbFormsModule} from "mdb-angular-ui-kit/forms";
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
+    GameModule,
     MdbFormsModule
   ],
   providers: [],

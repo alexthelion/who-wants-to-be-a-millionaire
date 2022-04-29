@@ -1,1 +1,60 @@
-<p>game works!</p>
+<div class="container-fluid game-background overflow-hidden">
+
+  <div class="row offset-md-3 offset-sm-3" style="padding-top: 50vh">
+    <div class="col-8">
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body"><span>{{currentQuestion?.question}}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3" [ngClass]="{'disabled-buttons': currentCorrectIndex !== undefined}">
+        <div class="col-6">
+          <button type="button" class="btn btn-light w-100"
+                  [ngClass]="{'btn-light': currentCorrectIndex === undefined, 'btn-success': currentCorrectIndex !== undefined && currentCorrectIndex === 0,
+                   'btn-danger': currentCorrectIndex !== undefined && currentCorrectIndex !== 0}"
+                  (click)="selectAnswer(currentQuestion?.correct_answer)">{{currentQuestion?.correct_answer}}</button>
+        </div>
+
+        <div class="col-6">
+          <button type="button" class="btn w-100"
+                  [ngClass]="{'btn-light': currentCorrectIndex === undefined, 'btn-success': currentCorrectIndex !== undefined && currentCorrectIndex === 1,
+                   'btn-danger': currentCorrectIndex !== undefined && currentCorrectIndex !== 1}"
+                  (click)="selectAnswer(currentQuestion?.incorrect_answers[0])">{{currentQuestion?.incorrect_answers[0]}}</button>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-6">
+          <button type="button" class="btn btn-light w-100"
+                  [ngClass]="{'btn-light': currentCorrectIndex === undefined, 'btn-success': currentCorrectIndex !== undefined && currentCorrectIndex === 2,
+                   'btn-danger': currentCorrectIndex !== undefined && currentCorrectIndex !== 2}"
+                  (click)="selectAnswer(currentQuestion?.incorrect_answers[1])">{{currentQuestion?.incorrect_answers[1]}}</button>
+        </div>
+
+        <div class="col-6">
+          <button type="button" class="btn btn-light w-100"
+                  [ngClass]="{'btn-light': currentCorrectIndex === undefined, 'btn-success': currentCorrectIndex !== undefined && currentCorrectIndex === 3,
+                   'btn-danger': currentCorrectIndex !== undefined && currentCorrectIndex !== 3}"
+                  (click)="selectAnswer(currentQuestion?.incorrect_answers[2])">{{currentQuestion?.incorrect_answers[2]}}</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-5 pt-3">
+    <a type="button" class="btn btn-primary mx-2">
+      <i class="fas fa-angle-double-right"></i>
+      Skip Question
+    </a>
+
+    <a type="button" class="btn btn-success" (click)="nextQuestion()" [ngClass]="{'disabled': currentCorrectIndex === undefined}">
+      <i class="fas fa-angle-right"></i>
+      Next Question
+    </a>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+.game-background {
+  background-image: url('../../assets/images/backg.jpg');
+  min-height: 100vh;
+  max-height: 100vh;
+}
+
+.disabled-buttons {
+  pointer-events: none !important;
+}
