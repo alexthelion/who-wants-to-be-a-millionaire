@@ -7,3 +7,14 @@
 
 // MDB SCSS
 @import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
+
+
+.btn-light:hover {
+  color: white;
+  background-color: #00b74a;
+}
+
+.btn-light {
+  color: white;
+  background-color: #071e4d;
+}
