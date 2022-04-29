@@ -12,6 +12,7 @@ export class GameService {
   private _gameDetailsArray: GameDetailsModel[] = [];
 
   constructor(private httpClient: HttpClient) {
+    this.fillDemoGameDetailsArray();
   }
 
   createGameDetails(username: string): void {
@@ -34,7 +35,15 @@ export class GameService {
   }
 
   get gameDetailsArray(): GameDetailsModel[] {
-    return this.gameDetailsArray;
+    return this._gameDetailsArray;
   }
 
+  private fillDemoGameDetailsArray(): void {
+    this._gameDetailsArray.push(new GameDetailsModel(new Date().getMilliseconds().toString(),
+      'Adam', new Date(), 0, 3));
+    this._gameDetailsArray.push(new GameDetailsModel(new Date().getMilliseconds().toString(),
+      'James', new Date(), 2, 2));
+    this._gameDetailsArray.push(new GameDetailsModel(new Date().getMilliseconds().toString(),
+      'Kris', new Date(), 0, 1));
+  }
 }

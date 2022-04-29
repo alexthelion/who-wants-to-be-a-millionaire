@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {GameService} from '../game/game.service';
+import {GameDetailsModel} from '../game/models/game.model';
 
 @Component({
   selector: 'app-scoreboard',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeaderboardComponent implements OnInit {
 
-  constructor() { }
+  gameDetailsArray: GameDetailsModel[] = [];
+  constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
+    this.gameDetailsArray = this.gameService.gameDetailsArray;
   }
 
 }

@@ -8,6 +8,9 @@
 // MDB SCSS
 @import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
 
+body {
+  overflow: hidden;
+}
 
 .btn-light:hover {
   color: white;
