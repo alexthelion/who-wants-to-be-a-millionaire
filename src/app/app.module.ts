@@ -8,6 +8,7 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import {MdbFormsModule} from "mdb-angular-ui-kit/forms";
 import {HttpClientModule} from '@angular/common/http';
 import {GameModule} from './game/game.module';
+import {MdbAccordionModule} from 'mdb-angular-ui-kit/accordion';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {GameModule} from './game/game.module';
     HttpClientModule,
     AppRoutingModule,
     GameModule,
-    MdbFormsModule
+    MdbFormsModule,
+    MdbAccordionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

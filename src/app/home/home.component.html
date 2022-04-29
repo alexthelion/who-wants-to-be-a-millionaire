@@ -4,12 +4,12 @@
       <div class="card">
         <div class="card-body">
           <mdb-form-control>
-            <input mdbInput type="text" id="typeText" class="form-control" />
+            <input mdbInput type="text" id="typeText" class="form-control" #username/>
             <label mdbLabel class="form-label" for="typeText">Enter your name</label>
           </mdb-form-control>
         </div>
         <div class="card-footer">
-          <a type="button" class="btn btn-primary">Start</a>
+          <a type="button" class="btn btn-primary" [ngClass]="{'disabled': !username.value.length}" (click)="createGame(username.value)">Start</a>
         </div>
       </div>
     </div>

@@ -1,6 +1,27 @@
 <div class="container-fluid game-background overflow-hidden">
 
-  <div class="row offset-md-3 offset-sm-3" style="padding-top: 50vh">
+  <div class="mt-5 pt-3">
+    <div class="row d-flex justify-content-start">
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            <h5>Game Details</h5>
+            <span class="no-wrap">username: {{username}}</span>
+            <br>
+            <span>Correct Answers: {{correctAnswers}}</span>
+            <br>
+            <span>Wrong Answers: {{wrongAnswers}}</span>
+            <br>
+            <span>Skipped Questions: {{skippedQuestions}}</span>
+            <br>
+            <span>Remaining Questions: {{gameDetails?.questions?.length - correctAnswers - wrongAnswers - skippedQuestions}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row offset-md-3 offset-sm-3" style="padding-top: 10vh">
     <div class="col-8">
 
       <div class="row">
@@ -12,47 +33,24 @@
       </div>
 
       <div class="row mt-3" [ngClass]="{'disabled-buttons': currentCorrectIndex !== undefined}">
-        <div class="col-6">
+        <div class="col-6" *ngFor="let answer of currentQuestion?.answers; let i = index">
           <button type="button" class="btn btn-light w-100"
-                  [ngClass]="{'btn-light': currentCorrectIndex === undefined, 'btn-success': currentCorrectIndex !== undefined && currentCorrectIndex === 0,
-                   'btn-danger': currentCorrectIndex !== undefined && currentCorrectIndex !== 0}"
-                  (click)="selectAnswer(currentQuestion?.correct_answer)">{{currentQuestion?.correct_answer}}</button>
-        </div>
-
-        <div class="col-6">
-          <button type="button" class="btn w-100"
-                  [ngClass]="{'btn-light': currentCorrectIndex === undefined, 'btn-success': currentCorrectIndex !== undefined && currentCorrectIndex === 1,
-                   'btn-danger': currentCorrectIndex !== undefined && currentCorrectIndex !== 1}"
-                  (click)="selectAnswer(currentQuestion?.incorrect_answers[0])">{{currentQuestion?.incorrect_answers[0]}}</button>
+                  [ngClass]="{'btn-light': currentCorrectIndex === undefined, 'btn-success': currentCorrectIndex !== undefined && currentCorrectIndex === i,
+                   'btn-danger': currentCorrectIndex !== undefined && currentCorrectIndex !== i}"
+                  (click)="selectAnswer(answer)">{{answer}}</button>
         </div>
       </div>
-
-      <div class="row mt-3">
-        <div class="col-6">
-          <button type="button" class="btn btn-light w-100"
-                  [ngClass]="{'btn-light': currentCorrectIndex === undefined, 'btn-success': currentCorrectIndex !== undefined && currentCorrectIndex === 2,
-                   'btn-danger': currentCorrectIndex !== undefined && currentCorrectIndex !== 2}"
-                  (click)="selectAnswer(currentQuestion?.incorrect_answers[1])">{{currentQuestion?.incorrect_answers[1]}}</button>
-        </div>
-
-        <div class="col-6">
-          <button type="button" class="btn btn-light w-100"
-                  [ngClass]="{'btn-light': currentCorrectIndex === undefined, 'btn-success': currentCorrectIndex !== undefined && currentCorrectIndex === 3,
-                   'btn-danger': currentCorrectIndex !== undefined && currentCorrectIndex !== 3}"
-                  (click)="selectAnswer(currentQuestion?.incorrect_answers[2])">{{currentQuestion?.incorrect_answers[2]}}</button>
-        </div>
-      </div>
-
     </div>
   </div>
 
   <div class="d-flex justify-content-center mt-5 pt-3">
-    <a type="button" class="btn btn-primary mx-2">
+    <a type="button" class="btn btn-primary mx-2" (click)="skipQuestion()">
       <i class="fas fa-angle-double-right"></i>
       Skip Question
     </a>
 
-    <a type="button" class="btn btn-success" (click)="nextQuestion()" [ngClass]="{'disabled': currentCorrectIndex === undefined}">
+    <a type="button" class="btn btn-success" (click)="nextQuestion()"
+       [ngClass]="{'disabled': currentCorrectIndex === undefined}">
       <i class="fas fa-angle-right"></i>
       Next Question
     </a>
