@@ -37,7 +37,7 @@
           <button type="button" class="btn btn-light w-100"
                   [ngClass]="{'btn-light': currentCorrectIndex === undefined, 'btn-success': currentCorrectIndex !== undefined && currentCorrectIndex === i,
                    'btn-danger': currentCorrectIndex !== undefined && currentCorrectIndex !== i, 'mt-2': i > 1}"
-                  (click)="selectAnswer(answer)">{{answer}} - {{i}}</button>
+                  (click)="selectAnswer(answer)">{{answer}}</button>
         </div>
       </div>
     </div>
