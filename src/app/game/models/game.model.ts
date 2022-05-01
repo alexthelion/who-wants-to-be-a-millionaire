@@ -2,6 +2,10 @@ export class GameDetailsModel {
   constructor(public id: string, public username: string, public date: Date,
               public skippedCounter: number = 0, public wrongAnswersCounter: number = 0, public questions?: QuestionModel[]) {
   }
+
+  get score(): number {
+    return ((!!this.questions ? this?.questions?.length : 10) - this.skippedCounter - this.wrongAnswersCounter) * 10;
+  }
 }
 
 export class QuestionModel {

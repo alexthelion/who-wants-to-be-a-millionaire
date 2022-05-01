@@ -14,6 +14,17 @@ export class LeaderboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameDetailsArray = this.gameService.gameDetailsArray;
+    this.gameDetailsArray = this.gameDetailsArray.sort((a, b) => {
+      if (a.score > b.score) {
+        return -1;
+      }
+
+      if (a.score < b.score) {
+        return 1;
+      }
+
+      return 0;
+    });
   }
 
 }
