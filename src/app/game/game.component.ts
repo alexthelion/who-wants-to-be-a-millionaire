@@ -14,8 +14,6 @@ export class GameComponent implements OnInit {
   currentAnswer: string | undefined;
   currentCorrectIndex: number | undefined;
   correctAnswers = 0;
-  wrongAnswers = 0;
-  skippedQuestions = 0;
   gameDetails: GameDetailsModel;
 
   private questions: QuestionModel[];
@@ -26,6 +24,7 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.questions = this.route.snapshot.data['questions'];
     this.gameDetails = this.gameService.gameDetails;
+
     if (!this.gameDetails) {
       this.router.navigateByUrl('/');
     }
@@ -54,7 +53,7 @@ export class GameComponent implements OnInit {
     if (this.currentQuestion.correct_answer === this.currentAnswer) {
       this.correctAnswers += 1;
     } else {
-      this.wrongAnswers += 1;
+      this.gameDetails.wrongAnswersCounter += 1;
     }
   }
 
@@ -64,7 +63,7 @@ export class GameComponent implements OnInit {
   }
 
   skipQuestion(): void {
-    this.skippedQuestions += 1;
+    this.gameDetails.skippedCounter += 1;
     this.currentAnswer = '';
     this.nextQuestion();
   }
