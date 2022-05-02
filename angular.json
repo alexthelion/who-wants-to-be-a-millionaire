@@ -107,5 +107,8 @@
       }
     }
   },
-  "defaultProject": "who-wants-to-be-a-millionaire"
+  "defaultProject": "who-wants-to-be-a-millionaire",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

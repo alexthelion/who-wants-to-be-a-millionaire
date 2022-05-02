@@ -10,11 +10,11 @@
             <br>
             <span>Correct Answers: {{correctAnswers}}</span>
             <br>
-            <span>Wrong Answers: {{gameDetails.wrongAnswersCounter}}</span>
+            <span>Wrong Answers: {{gameDetails?.wrongAnswersCounter}}</span>
             <br>
-            <span>Skipped Questions: {{gameDetails.skippedCounter}}</span>
+            <span>Skipped Questions: {{gameDetails?.skippedCounter}}</span>
             <br>
-            <span>Remaining Questions: {{gameDetails?.questions?.length - correctAnswers - gameDetails.wrongAnswersCounter - gameDetails.skippedCounter}}</span>
+            <span>Remaining Questions: {{gameDetails?.questions?.length - correctAnswers - gameDetails?.wrongAnswersCounter - gameDetails?.skippedCounter}}</span>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GameDetailsModel, QuestionModel} from './models/game.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GameService} from './game.service';
+import {delay, first, tap} from 'rxjs';
 
 @Component({
   selector: 'app-game',
@@ -16,36 +17,35 @@ export class GameComponent implements OnInit {
   correctAnswers = 0;
   gameDetails: GameDetailsModel;
 
-  private questions: QuestionModel[];
-
-  constructor(private route: ActivatedRoute, private gameService: GameService, private router: Router) {
+  constructor(private route: ActivatedRoute,
+              private gameService: GameService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.questions = this.route.snapshot.data['questions'];
-    this.gameDetails = this.gameService.gameDetails;
-
-    if (!this.gameDetails) {
-      this.router.navigateByUrl('/');
-    }
-    this.gameDetails.questions = this.questions.map(q => {
-      return new QuestionModel(q.category, q.difficulty, q.question, q.correct_answer, q.incorrect_answers);
-    });
-    this.gameDetails.questions.forEach(question => question.randomSort());
-    this.currentQuestion = this.gameDetails.questions[this.questionIndex];
+    this.gameService.getCurrentGameDetails().pipe(
+      first(),
+      delay(700),
+      tap(gameDetails => {
+        this.gameDetails = Object.assign({}, gameDetails);
+        if (!gameDetails) {
+          this.router.navigateByUrl('/');
+        }
+        this.currentQuestion = this.gameDetails.questions[this.questionIndex];
+      })
+    ).subscribe();
   }
 
   nextQuestion(): void {
     this.updateScoreSummary();
     this.questionIndex += 1;
-    if (!!this.currentAnswer && this.questions.length > this.questionIndex) {
+    if (!!this.currentAnswer && this.gameDetails.questions.length > this.questionIndex) {
       this.currentQuestion = undefined;
       this.currentCorrectIndex = undefined;
       this.currentQuestion = this.gameDetails.questions[this.questionIndex];
     } else {
       alert('Game Over');
-      this.gameService.gameOver();
-      this.router.navigateByUrl('/');
+      this.gameService.gameOver(this.gameDetails);
+      setTimeout(() => this.router.navigateByUrl('/'), 700);
     }
   }
 
@@ -69,6 +69,6 @@ export class GameComponent implements OnInit {
   }
 
   get username(): string {
-    return this.gameService.gameDetails?.username;
+    return this.gameDetails?.username;
   }
 }

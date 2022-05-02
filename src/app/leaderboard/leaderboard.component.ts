@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GameService} from '../game/game.service';
 import {GameDetailsModel} from '../game/models/game.model';
+import {Store} from '@ngrx/store';
+
+import {tap} from 'rxjs';
+import {selectAllGameDetails} from '../store/game-details';
 
 @Component({
   selector: 'app-scoreboard',
@@ -10,10 +14,19 @@ import {GameDetailsModel} from '../game/models/game.model';
 export class LeaderboardComponent implements OnInit {
 
   gameDetailsArray: GameDetailsModel[] = [];
-  constructor(private gameService: GameService) { }
+
+  constructor(private gameService: GameService, private store: Store<any>) { }
 
   ngOnInit(): void {
-    this.gameDetailsArray = this.gameService.gameDetailsArray;
+    this.store.select(selectAllGameDetails).pipe(
+      tap(result => {
+        this.gameDetailsArray = result;
+        this.sortByHighestScore();
+        }))
+      .subscribe()
+  }
+
+  private sortByHighestScore(): void {
     this.gameDetailsArray = this.gameDetailsArray.sort((a, b) => {
       if (a.score > b.score) {
         return -1;
@@ -26,5 +39,4 @@ export class LeaderboardComponent implements OnInit {
       return 0;
     });
   }
-
 }
