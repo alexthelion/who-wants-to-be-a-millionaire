@@ -1,14 +1,10 @@
-import { Injectable } from '@angular/core';
-import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
+import {Injectable} from '@angular/core';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {GameService} from '../../game/game.service';
-import {map, mergeMap, Observable} from 'rxjs';
-import {
-  GameDetailsModelActionTypes,
-  LoadQuestions,
-  SetCurrentGameDetailsModel,
-  UpsertGameDetailsModel
-} from './game-details-model.actions';
+import {map, mergeMap} from 'rxjs';
+import {GameDetailsModelActionTypes, LoadQuestions, SetCurrentGameDetailsModel} from './game-details-model.actions';
 import {GameDetailsModel, QuestionModel} from '../../game/models/game.model';
+import {getUniqueId} from '../../utils/uuid';
 
 @Injectable()
 export class GameDetailsEffects {
@@ -18,7 +14,7 @@ export class GameDetailsEffects {
     mergeMap((action: LoadQuestions) =>
       this.gameService.fetchQuestions().pipe(
         map((questions: any) => {
-          const newGameDetailsModel = new GameDetailsModel(new Date().getMilliseconds().toString(), action.payload.username, new Date());
+          const newGameDetailsModel = new GameDetailsModel(getUniqueId(), action.payload.username, new Date());
           newGameDetailsModel.questions = questions.map(q => {
             return new QuestionModel(q.category, q.difficulty, q.question, q.correct_answer, q.incorrect_answers);
           });
